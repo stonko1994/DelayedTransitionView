@@ -61,6 +61,10 @@ _It is possible to use the same `viewIndex` for multiple views if they should ap
 
 ## Example
 
+<p align="center">
+    <img src="https://github.com/stonko1994/DelayedTransitionView/assets/6216959/eb3abb8f-e223-4b0f-bada-7330b60464bd)" width="600" height="419"/>
+</p>
+
 ---
 
 <a href="https://www.buymeacoffee.com/davidsteinacher" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
