@@ -1,4 +1,5 @@
 <p align="center">
+    <img src="https://github.com/stonko1994/DelayedTransitionView/assets/6216959/d648da53-bfd5-4821-8b89-2b42112e904f)" width="100" height="100"/>
     <h1 align="center">DelayedTransitionView</h1>
     <p align="center">Appear animation transition View for SwiftUI</p>
 </p>
