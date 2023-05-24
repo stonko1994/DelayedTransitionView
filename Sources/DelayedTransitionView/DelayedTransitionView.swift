@@ -11,11 +11,13 @@ public struct DelayedTransitionView<Content: View>: View {
     ///   - animationDuration: The duration of the animation in seconds. Default `0.6`
     ///   - delay: The delay before the animation starts. Default `0.2`
     ///   - offset: The `y` offset for the view which will be animated. Default is `20`
+    ///   - orientation: The orientation in which the view should appear. Default is `.vertical`
     ///   - content: A view builder that creates the content of this stack.
     public init(
         animationDuration: Double? = nil,
         delay: Double? = nil,
         offset: Double? = nil,
+        orientation: Axis.Set? = nil,
         @ViewBuilder content: @escaping () -> Content
     ) {
         self.content = content
@@ -23,7 +25,8 @@ public struct DelayedTransitionView<Content: View>: View {
         let configuration = DelayedPresentationConfiguration(
             animationDuration: animationDuration ?? DelayedPresentationConfiguration.DefaultValues.animationDuration,
             delay: delay ?? DelayedPresentationConfiguration.DefaultValues.delay,
-            offset: offset ?? DelayedPresentationConfiguration.DefaultValues.offset
+            offset: offset ?? DelayedPresentationConfiguration.DefaultValues.offset,
+            orientation: orientation ?? DelayedPresentationConfiguration.DefaultValues.orientation
         )
         self._delayedPresentationConfiguration = StateObject(wrappedValue: configuration)
     }
