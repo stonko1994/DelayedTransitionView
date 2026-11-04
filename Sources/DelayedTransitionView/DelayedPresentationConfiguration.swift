@@ -6,6 +6,7 @@ class DelayedPresentationConfiguration: ObservableObject {
         static let delay: Double = 0.2
         static let offset: Double = 20
         static let orientation: Axis.Set = .vertical
+        static let replayOnReappear: Bool = false
     }
 
     /// Acts as the trigger for the animation
@@ -19,16 +20,20 @@ class DelayedPresentationConfiguration: ObservableObject {
     let offset: Double
     /// Define the orientation when the view appears
     let orientation: Axis.Set
+    /// Define whether the animation replays when the container reappears
+    let replayOnReappear: Bool
 
     init(
         animationDuration: Double,
         delay: Double,
         offset: Double,
-        orientation: Axis.Set
+        orientation: Axis.Set,
+        replayOnReappear: Bool
     ) {
         self.animationDuration = animationDuration
         self.delay = delay
         self.offset = offset
         self.orientation = orientation
+        self.replayOnReappear = replayOnReappear
     }
 }
