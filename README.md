@@ -8,6 +8,7 @@
 - [Installation](#installation)
     - [Swift Package Manager](#using-swift-package-manager)
 - [Usage](#usage)
+    - [Replaying the animation](#replaying-the-animation)
 - [Example](#example)
 
 ## Installation
@@ -59,6 +60,23 @@ In this example only the `Text` views will appear be animated.
 
 For more control over the individual animations, checkout the additional configuration properties. (See code documentation for details)
 _It is possible to use the same `viewIndex` for multiple views if they should appear at the same time. Also it does not need to start with `0`_
+
+### Replaying the animation
+
+By default, `DelayedTransitionView` animates on its first appearance. Set `replayOnReappear` to `true` to replay the entrance animation when the container reappears, for example when switching between tabs:
+
+```swift
+DelayedTransitionView(replayOnReappear: true) {
+    Text("Tab content")
+        .delayedPresentation(viewIndex: 0)
+}
+```
+
+Leave `replayOnReappear` disabled when returning to a screen should feel like continuing where you left off. For example, returning from match details to a scrolled results list usually does not need another entrance animation. The default of `false` preserves the existing behavior for callers that do not specify this option.
+
+When replay is enabled, visibility resets without animation when the container disappears. The next appearance uses the configured entrance animation without recreating the content.
+
+Replay follows the container's lifecycle, not each child's appearance. To replay when switching tabs while preserving content when navigating back from a detail screen, place `DelayedTransitionView` around the tab's entire `NavigationStack`. Placing it inside the stack's root content also replays when returning from a detail screen.
 
 ## Example
 
