@@ -10,14 +10,35 @@ struct DelayedPresentationViewModifier: ViewModifier {
     let orientation: Axis.Set?
 
     func body(content: Content) -> some View {
-        content
-            .opacity(delayedPresentationState.isVisible ? 1 : 0)
-            .modifier(ConditionalOffsetViewModifier(offset: offset, orientation: orientation))
-            .animation(
-                .easeOut(duration: showAnimationDuration ?? delayedPresentationState.animationDuration)
-                    .delay(0.1 + (Double(viewNumber) * (itemDelay ?? delayedPresentationState.delay))),
-                value: delayedPresentationState.isVisible
-            )
+        let animation = Animation.easeOut(duration: showAnimationDuration ?? delayedPresentationState.animationDuration)
+            .delay(0.1 + (Double(viewNumber) * (itemDelay ?? delayedPresentationState.delay)))
+
+        if #available(iOS 17, tvOS 17, watchOS 10, *) {
+            let isVisible = delayedPresentationState.isVisible
+            let presentationOffset = isVisible ? 0 : (offset ?? delayedPresentationState.offset)
+            let isVertical = (orientation ?? delayedPresentationState.orientation) == .vertical
+
+            content.animation(animation) { view in
+                // Animate only the presentation effects so the content's initial layout doesn't animate.
+                view
+                    .visualEffect { effect, _ in
+                        effect
+                            .opacity(isVisible ? 1 : 0)
+                            .offset(
+                                x: isVertical ? 0 : presentationOffset,
+                                y: isVertical ? presentationOffset : 0
+                            )
+                    }
+            }
+        } else {
+            // FIXME: Layout changes in the same update as visibility can also animate, causing content to fly in from
+            // the top-left.
+            // Isolate the presentation effects on older OS versions without suppressing the content's own animations.
+            content
+                .opacity(delayedPresentationState.isVisible ? 1 : 0)
+                .modifier(ConditionalOffsetViewModifier(offset: offset, orientation: orientation))
+                .animation(animation, value: delayedPresentationState.isVisible)
+        }
     }
 }
 
